@@ -3,7 +3,16 @@ on:
   pull_request:
     types: opened
   workflow_dispatch:
-  
+  push:
+    branches:
+      - master
+      - 'dev-*' #any char except /
+      - 'feat/**' #even / in the name is fine, eg. feat/new feat/new/button
+    paths-ignore:
+      - '.github/workflows/*' #the workflow will only run when push is to the 'branches' that are mentioned
+                              # and there should be no change in the workflow files as paths-ignore
+    # If you use both the branches filter and the paths filter, 
+    # the workflow will only run when both filters are satisfied.
 jobs:
   deploy:
     runs-on: ubuntu-latest
